@@ -1,0 +1,14 @@
+button, div, form, input {
+    margin: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    margin-left: 2px;
+}
