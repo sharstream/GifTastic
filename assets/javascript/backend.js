@@ -16,6 +16,7 @@ $(document).ready(function () {
             var id = replaceLabel;
             $('#animal-buttons').append($('<button />', {
                 'class': id + ' btn btn-success',
+                'id': 'submitAnimal',
                 'data-animal': replaceLabel,
                 'type': 'button',
                 'name': 'name'
@@ -40,9 +41,9 @@ $(document).ready(function () {
         renderButtons();
     });
 
-    $('.get_animal').on('click', function(){
+    $('#submitResult').on('click', function(){
         // debugger
-        event.preventDefault();
+        // event.preventDefault();
 
         animal = $('.animal_search_input').val();
 
@@ -53,7 +54,7 @@ $(document).ready(function () {
         renderButtons();
     })
 
-    $('.btn-success').on('click', function (event) {
+    $("button").on('click', function (event) {
         debugger
         event.preventDefault();
         
@@ -106,7 +107,10 @@ $(document).ready(function () {
                 var animalImage = $("<img>");
                 // Setting the src attribute of the image to a property pulled off the result item
                 animalImage.attr("src", results[i].images.fixed_height.url);
-
+                animalImage.attr("class","gif");
+                animalImage.attr("data-still", results[i].images.fixed_height.url);
+                animalImage.attr("data-animate", results[i].images.fixed_height.url);
+                animalImage.attr("data-state", "still");
                 // Appending the paragraph and image tag to the animalDiv
                 animalDiv.append(p);
                 animalDiv.append(animalImage);
@@ -114,6 +118,20 @@ $(document).ready(function () {
                 // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
                 $("#animals").prepend(animalDiv);
             }
+
+            $('.gif').on('click', function(){
+                var state = $(this).attr('data-state');
+                console.log(state);
+                if (state === 'still') {
+                    $(this).attr('src', $(this).attr('data-animate'));
+                    $(this).attr('data-state', 'animate');
+                }
+                else {
+                    $(this).attr('src', $(this).attr('data-still'));
+                    $(this).attr('data-state', 'still');
+                }
+            });
+
         }).done(function(){
             console.log("success");
 
