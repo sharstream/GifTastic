@@ -26,7 +26,7 @@ $(document).ready(function () {
                 + label + '</label>');
 
             // $('.button').text("dog");
-        }
+        } 
 
         $('#animal-buttons').empty();
         // $('#movies-view').children().remove();
@@ -54,8 +54,8 @@ $(document).ready(function () {
         renderButtons();
     })
 
-    $("button").on('click', function (event) {
-        debugger
+    $("button, input[type='button']").on('click', function (event) {
+        // debugger
         event.preventDefault();
         
         var animal = $(this).attr("data-animal");
