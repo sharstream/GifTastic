@@ -83,7 +83,7 @@ $(document).ready(function () {
     });
 
     $("button, input[type='button']").on('click', function (event) {
-        debugger
+        // debugger
         event.preventDefault();
         $("#animals").children('.col-md-3').remove();
         animal = $('.animal_search_input').val().trim();
