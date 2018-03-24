@@ -58,7 +58,7 @@ $(document).ready(function () {
     })
     
     $(".gif").on("click", function () {
-        debugger
+        // debugger
         var state = $(this).attr("data-state");
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
@@ -73,7 +73,11 @@ $(document).ready(function () {
         // debugger
         var inputID = $(this).find("label").attr("for");
         $('#' + inputID).click();
+        animal = inputID.val();
+        var url = "https://api.giphy.com/v1/gifs/search?q=" +
+            animal + "&api_key=dc6zaTOxFJmzC&limit=10";;
 
+        query_url = url;
         $("#animals").children('.col-md-3').remove();
         ajaxCall(query_url);
     });
@@ -82,7 +86,7 @@ $(document).ready(function () {
         // debugger
         event.preventDefault();
         $("#animals").children('.col-md-3').remove();
-        var animal = $('.animal_search_input').val().trim();
+        animal = $('.animal_search_input').val().trim();
 
         var url = "https://api.giphy.com/v1/gifs/search?q=" +
             animal + "&api_key=dc6zaTOxFJmzC&limit=10";;
