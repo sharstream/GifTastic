@@ -17,24 +17,12 @@ $(document).ready(function () {
         function createRadioElement(label) {
             var replaceLabel = label.replace(/\ /g, '_');
             var id = replaceLabel;
-            $('#animal-buttons').append($('<button />', {
-                'class': id + ' btn btn-success',
-                'id': 'submitAnimal',
-                'data-animal': replaceLabel,
-                'type': 'button',
-                'name': 'name'
-            })).css({'margin-left':'2%'});
-
-            $('.' + replaceLabel).append('<label for="' + id + '">'
-                + label + '</label>');
-
-            // $('.button').text("dog");
+            var button = '<button class="btn btn-success" type="button">' + label + '</button>&nbsp;';
+            $('#animal-buttons').append(button);
         } 
 
         $('#animal-buttons').empty();
-        // $('#movies-view').children().remove();
         animals.forEach(function (animal) {
-            // debugger
             createRadioElement(animal);
         })
     }
@@ -46,8 +34,6 @@ $(document).ready(function () {
 
     $('#submitResult').on('click', function(){
         // debugger
-        // event.preventDefault();
-
         animal = $('.animal_search_input').val();
 
         animals.push(animal);
@@ -70,11 +56,17 @@ $(document).ready(function () {
         }
     });
 
-    $("label").click(function(){
-        // debugger
-        var inputID = $(this).find("label").attr("for");
-        $('#' + inputID).click();
-        animal = inputID.val();
+    $("#animal-buttons").on('click', 'button', function(event){
+        debugger
+        var clickedBtn = event.target.textContent;
+        var ele = document.querySelectorAll("#animal-buttons > button.btn");
+        for (var i = 0; i < ele.length; i++) {
+            var check = ele[i].textContent;
+            if (check === clickedBtn) {
+                animal = check;
+                break;
+            }
+        }
         var url = "https://api.giphy.com/v1/gifs/search?q=" +
             animal + "&api_key=dc6zaTOxFJmzC&limit=10";;
 
