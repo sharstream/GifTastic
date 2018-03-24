@@ -8,6 +8,9 @@ $(document).ready(function () {
 
     var animal = "";
 
+    var query_url = "";
+
+    var labelID;
     // Function for displaying movie data
     function renderButtons() {
         // debugger
@@ -53,21 +56,46 @@ $(document).ready(function () {
 
         renderButtons();
     })
+    
+    $(".gif").on("click", function () {
+        debugger
+        var state = $(this).attr("data-state");
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+        } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+        }
+    });
+
+    $("label").click(function(){
+        // debugger
+        var inputID = $(this).find("label").attr("for");
+        $('#' + inputID).click();
+
+        $("#animals").children('.col-md-3').remove();
+        ajaxCall(query_url);
+    });
 
     $("button, input[type='button']").on('click', function (event) {
         // debugger
         event.preventDefault();
-        
-        var animal = $(this).attr("data-animal");
+        $("#animals").children('.col-md-3').remove();
+        var animal = $('.animal_search_input').val().trim();
 
         var url = "https://api.giphy.com/v1/gifs/search?q=" +
             animal + "&api_key=dc6zaTOxFJmzC&limit=10";;
 
         query_url = url;
 
+        ajaxCall(query_url);
+    });
+
+    function ajaxCall(queryAnimal){
         // debugger
         $.ajax({
-            url: query_url,
+            url: queryAnimal,
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             xhr: function (data, status) {
@@ -98,19 +126,19 @@ $(document).ready(function () {
             for (var i = 0; i < results.length; i++) {
 
                 // Creating and storing a div tag
-                var animalDiv = $("<div>");
-
+                var animalDiv = $("<div>").addClass('col-md-3');
+                
                 // Creating a paragraph tag with the result item's rating
                 var p = $("<p>").text("Rating: " + results[i].rating);
 
                 // Creating and storing an image tag
                 var animalImage = $("<img>");
                 // Setting the src attribute of the image to a property pulled off the result item
-                animalImage.attr("src", results[i].images.fixed_height.url);
-                animalImage.attr("class","gif");
-                animalImage.attr("data-still", results[i].images.fixed_height.url);
-                animalImage.attr("data-animate", results[i].images.fixed_height.url);
-                animalImage.attr("data-state", "still");
+                animalImage.attr("src", (results[i].images.fixed_height.url).replace(/\?.*/, ''));
+                animalImage.attr("data-still", (results[i].images.fixed_height.url).replace(/\/200?.*/, '/200_s.gif'));
+                animalImage.attr("data-animate", (results[i].images.fixed_height.url).replace(/\?.*/, ''));
+                animalImage.attr("data-state", "animate");
+                animalImage.attr("class", "gif");
                 // Appending the paragraph and image tag to the animalDiv
                 animalDiv.append(p);
                 animalDiv.append(animalImage);
@@ -118,20 +146,6 @@ $(document).ready(function () {
                 // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
                 $("#animals").prepend(animalDiv);
             }
-
-            $('.gif').on('click', function(){
-                var state = $(this).attr('data-state');
-                console.log(state);
-                if (state === 'still') {
-                    $(this).attr('src', $(this).attr('data-animate'));
-                    $(this).attr('data-state', 'animate');
-                }
-                else {
-                    $(this).attr('src', $(this).attr('data-still'));
-                    $(this).attr('data-state', 'still');
-                }
-            });
-
         }).done(function(){
             console.log("success");
 
@@ -141,7 +155,7 @@ $(document).ready(function () {
         }).always(function(){
             console.log("complete");
         });
-    });
+    };
 
     renderButtons();
 });
