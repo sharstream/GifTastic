@@ -57,7 +57,7 @@ $(document).ready(function () {
     });
 
     $("#animal-buttons").on('click', 'button', function(event){
-        debugger
+        // debugger
         var clickedBtn = event.target.textContent;
         var ele = document.querySelectorAll("#animal-buttons > button.btn");
         for (var i = 0; i < ele.length; i++) {
