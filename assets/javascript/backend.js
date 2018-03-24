@@ -57,8 +57,9 @@ $(document).ready(function () {
         renderButtons();
     })
     
-    $(".gif").on("click", function () {
+    $("body").on("click", '.gif', function () {
         // debugger
+
         var state = $(this).attr("data-state");
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
