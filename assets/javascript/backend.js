@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     var query_url = "";
 
-    var labelID;
+    var regex = /^[a-zA-Z_\s]+$/;
     // Function for displaying movie data
     function renderButtons() {
         // debugger
@@ -83,17 +83,21 @@ $(document).ready(function () {
     });
 
     $("button, input[type='button']").on('click', function (event) {
-        // debugger
+        debugger
         event.preventDefault();
         $("#animals").children('.col-md-3').remove();
         animal = $('.animal_search_input').val().trim();
+        if (regex.test(animal)) {
+            var url = "https://api.giphy.com/v1/gifs/search?q=" +
+                animal + "&api_key=dc6zaTOxFJmzC&limit=10";;
 
-        var url = "https://api.giphy.com/v1/gifs/search?q=" +
-            animal + "&api_key=dc6zaTOxFJmzC&limit=10";;
+            query_url = url;
 
-        query_url = url;
-
-        ajaxCall(query_url);
+            ajaxCall(query_url);
+        }
+        else{
+            alert('Please enter a alphabet letters in your search!');
+        }
     });
 
     function ajaxCall(queryAnimal){
