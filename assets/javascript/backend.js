@@ -28,7 +28,14 @@ $(document).ready(function () {
     }
 
     $("#clearResults").on("click", function () {
+        // debugger
         console.log("clicked");
+        $("#animals").children('.col-md-3').remove();
+        $('.animal_search_input').val('');
+        animals = ['dog', 'cat', 'rabbit', 'hamster', 'skunk', 'goldfish', 'bird', 'ferret', 'turtle', 'sugar glider',
+            'chinchilla', 'hedgehog', 'hermit crab', 'gerbil', 'pygmy goat', 'checken', 'capybara', 'teacup pig',
+            'serval', 'salamander', 'frog'
+        ];
         renderButtons();
     });
 
