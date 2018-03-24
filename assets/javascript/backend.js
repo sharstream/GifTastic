@@ -88,6 +88,8 @@ $(document).ready(function () {
         $("#animals").children('.col-md-3').remove();
         animal = $('.animal_search_input').val().trim();
         if (regex.test(animal)) {
+            
+
             var url = "https://api.giphy.com/v1/gifs/search?q=" +
                 animal + "&api_key=dc6zaTOxFJmzC&limit=10";;
 
@@ -97,6 +99,7 @@ $(document).ready(function () {
         }
         else{
             alert('Please enter a alphabet letters in your search!');
+            $('.animal_search_input').val('');
         }
     });
 
